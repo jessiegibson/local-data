@@ -4,7 +4,7 @@ I am working on a MacOS desktop application for data cleaning and analytics. Thi
 
 
 ## Essential Visualizations
- - Bar & Column Charts: Vertical and Horizontal, with support for stacking (stacked or 100% stacked_ and grouping. 
+ - **Bar & Column Charts:** Vertical and Horizontal, with support for stacking (stacked or 100% stacked_ and grouping. 
   - **Line & Area Charts:** Used for time-series and trend analysis. 
   - **Scatter Plots:** Used when showing relationships and distributions between two numeric variables.
   - **Histograms:** For frequency distribution analysis. 
@@ -20,7 +20,7 @@ I am working on a MacOS desktop application for data cleaning and analytics. Thi
 3. Specialized Analytical Templates
 - **Customer Journey Maps:** Combining charts with sticky notes and flow arrows.
 - **A/B Test Visuals:** Specialized views to compare control vs. variant groups.
-- **GA4 / Website Analytics Maps:* Pre-built flows for web traffic.
+- **GA4 / Website Analytics Maps:** Pre-built flows for web traffic.
 - **OKRs & Alignment Canvases:** Mixing data with strategic planning shapes.
 
 

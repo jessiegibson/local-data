@@ -18,7 +18,7 @@ async fn get_csv_schema(path: String) -> Result<TableSchema, String> {
     //  1. Open a temporary in-memory DuckDB connection
     let conn = Connection::open_in_memory().map_err(|e| e.to_string())?;
 
-    let query = format!("DESCRIBE SELECT * FROM read_csv_auto('{}' LIMIT 1", path);
+    let query = format!("DESCRIBE (SELECT * FROM read_csv_auto('{}'));", path);
 
     let mut stmt = conn.prepare(&query).map_err(|e| e.to_string())?;
 
@@ -42,12 +42,12 @@ async fn get_csv_schema(path: String) -> Result<TableSchema, String> {
     Ok(TableSchema {
         columns,
         column_types: types,
-        row_count_estimate: 0,  \\ We can add count logic later
+        row_count_estimate: 0,  // We can add count logic later
     })
 }
 
 // Ensure the command is registered
-/#[cfg_attr(mobile, tauri::mobile_entry_point)]
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())

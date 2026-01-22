@@ -42,12 +42,12 @@ async fn get_csv_schema(path: String) -> Result<TableSchema, String> {
     Ok(TableSchema {
         columns,
         column_types: types,
-        row_count_estimate: 0,  \\ We can add count logic later
+        row_count_estimate: 0,  // We can add count logic later
     })
 }
 
 // Ensure the command is registered
-/#[cfg_attr(mobile, tauri::mobile_entry_point)]
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())

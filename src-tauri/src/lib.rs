@@ -1,15 +1,24 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 //
-use duckdb::Connection;
-use serde::{Deserialize, Serialize};
+use duckdb::{Connection, types::Value};
+use serde::Serialize;
+use serde_json::json;
 
 // This is the data structure we send back to React.
 #[derive(Serialize)]
-
 pub struct TableSchema {
     columns: Vec<String>,
     column_types: Vec<String>,
     row_count_estimate: usize,
+}
+
+// Result structure for SQL query execution
+#[derive(Serialize)]
+pub struct QueryResult {
+    columns: Vec<String>,
+    column_types: Vec<String>,
+    rows: Vec<Vec<serde_json::Value>>,
+    row_count: usize,
 }
 
 
@@ -18,7 +27,7 @@ async fn get_csv_schema(path: String) -> Result<TableSchema, String> {
     //  1. Open a temporary in-memory DuckDB connection
     let conn = Connection::open_in_memory().map_err(|e| e.to_string())?;
 
-    let query = format!("DESCRIBE SELECT * FROM read_csv_auto('{}' LIMIT 1", path);
+    let query = format!("DESCRIBE (SELECT * FROM read_csv_auto('{}'));", path);
 
     let mut stmt = conn.prepare(&query).map_err(|e| e.to_string())?;
 
@@ -51,7 +60,7 @@ async fn get_csv_schema(path: String) -> Result<TableSchema, String> {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![get_csv_schema])   // Register here!
+        .invoke_handler(tauri::generate_handler![get_csv_schema, execute_sql])   // Register here!
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
